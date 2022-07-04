@@ -17,7 +17,7 @@ export default function Login() {
               Register
             </NavLink>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 p-5">
             <h1 className="display-6 fw-bolder mb-5">LOGIN</h1>
 
             <form>
@@ -52,11 +52,14 @@ export default function Login() {
                   id="exampleCheck1"
                 />
                 <label className="form-check-label" for="exampleCheck1">
-                  Check me out
+                  Remember me
                 </label>
               </div>
-              <button type="submit" className="btn btn-primary">
-                Submit
+              <button
+                type="submit"
+                className="btn btn-primary w-100 mt-4 rounded-pill"
+              >
+                Login
               </button>
             </form>
           </div>
