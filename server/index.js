@@ -63,9 +63,21 @@ app.post("/login", async (req, res) => {
       if (isMatch) {
         // Generate Token which is define in user Schema
         const token = await user.generateToken();
+        res.cookie("jwt", token, {
+          // Expires Token in 24 hours
+          expires: new Date(Date.now() + 86400000),
+          httpOnly: true,
+        });
+        res.status(200).send("LoggedIn");
+      } else {
+        res.send(400).send("Invalid Credentials");
       }
+    } else {
+      res.send(400).send("Invalid Credentials");
     }
-  } catch (error) {}
+  } catch (error) {
+    res.status(400).send(error);
+  }
 });
 
 //Run server
