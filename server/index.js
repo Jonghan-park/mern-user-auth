@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 
 const app = express();
 
