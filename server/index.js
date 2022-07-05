@@ -7,6 +7,10 @@ const port = process.env.PORT || 5000;
 
 const app = express();
 
+// Configure ENV file & Require Connection File
+dotenv.config({ path: "./.env" });
+require("./db/conn");
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
