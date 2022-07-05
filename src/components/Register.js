@@ -95,6 +95,7 @@ export default function Register() {
                   id="email"
                   name="email"
                   value={user.email}
+                  onChange={handleInput}
                 />
               </div>
               <div className="mb-3">
@@ -107,6 +108,7 @@ export default function Register() {
                   id="password"
                   name="password"
                   value={user.password}
+                  onChange={handleInput}
                 />
               </div>
               <div className="mb-3 form-check">
