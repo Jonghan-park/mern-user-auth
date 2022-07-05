@@ -58,7 +58,7 @@ app.post("/login", async (req, res) => {
     const user = await Users.findOne({ email: email });
     if (user) {
       // Verify password
-      const isMatch = await bcryptjs.compare(password, users.password);
+      const isMatch = await bcryptjs.compare(password, user.password);
 
       if (isMatch) {
         // Generate Token which is define in user Schema
@@ -70,10 +70,10 @@ app.post("/login", async (req, res) => {
         });
         res.status(200).send("LoggedIn");
       } else {
-        res.send(400).send("Invalid Credentials");
+        res.status(400).send("Invalid Credentials");
       }
     } else {
-      res.send(400).send("Invalid Credentials");
+      res.status(400).send("Invalid Credentials");
     }
   } catch (error) {
     res.status(400).send(error);
@@ -84,3 +84,5 @@ app.post("/login", async (req, res) => {
 app.listen(port, () => {
   console.log(`App is listening on port ${port}`);
 });
+
+//Our Backend is Done and store data in database
