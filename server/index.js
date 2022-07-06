@@ -13,6 +13,7 @@ const port = process.env.PORT || 5000;
 
 //Require Model
 const Users = require("./models/userSchema");
+const Message = require("./models/msgSchema");
 
 // These method is used to get data and cookies from frondend
 app.use(express.json());
@@ -75,6 +76,31 @@ app.post("/login", async (req, res) => {
     } else {
       res.status(400).send("Invalid Credentials");
     }
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//Message
+app.post("/message", async (req, res) => {
+  try {
+    //Get body or data
+    const name = req.body.name;
+    const email = req.body.email;
+    const message = req.body.message;
+
+    const sendMsg = new Message({
+      name: name,
+      email: email,
+      message: message,
+    });
+
+    // Save Method is used to create user or insert user
+    // But before saving or inserting, password will hash
+    // Because of hashing. After hash, it will save to DB
+    const created = await sendMsg.save();
+    console.log(created);
+    res.status(200).send("Sent");
   } catch (error) {
     res.status(400).send(error);
   }

@@ -1,6 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function Contact() {
+  const navigate = useNavigate();
+
+  const [msg, setMsg] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  // Handle Inputs
+  const handleInput = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+
+    setMsg({ ...msg, [name]: value });
+  };
+
+  // Handle Submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Object Destructuring
+    // Store Object Data into Variables
+    const { name, email, message } = msg;
+    try {
+      // It is Submitted on port 3000 by default
+      // Which is front end but we need to submit it on backend
+      // which is on port 5000. so we need proxy
+      const res = await fetch("/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+        }),
+      });
+
+      if (res.status === 400 || !res) {
+        window.alert("Message Not Sent. Try again later");
+      } else {
+        window.alert("Message sent");
+        // Use useNavigate instead of using useHistory
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <section id="contact">
@@ -19,7 +70,7 @@ export default function Contact() {
               <img src="/assets/contact.png" alt="contact" className="w-75" />
             </div>
             <div className="col-md-6">
-              <form action="">
+              <form onSubmit={handleSubmit}>
                 <div class="mb-3">
                   <label for="name" className="form-label">
                     Your Name
@@ -29,6 +80,9 @@ export default function Contact() {
                     class="form-control"
                     id="name"
                     placeholder="John Smith"
+                    name="name"
+                    value={msg.name}
+                    onChange={handleInput}
                   />
                 </div>
                 <div class="mb-3">
@@ -40,6 +94,9 @@ export default function Contact() {
                     class="form-control"
                     id="email"
                     placeholder="name@example.com"
+                    name="email"
+                    value={msg.email}
+                    onChange={handleInput}
                   />
                 </div>
                 <div className="mb-3">
@@ -50,6 +107,9 @@ export default function Contact() {
                     className="form-control"
                     id="message"
                     rows="5"
+                    name="message"
+                    value={msg.message}
+                    onChange={handleInput}
                   ></textarea>
                 </div>
                 <button type="submit" className="btn btn-outline-primary">
