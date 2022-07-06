@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
 
 export default function Contact() {
-  const navigate = useNavigate();
-
   const [msg, setMsg] = useState({
     name: "",
     email: "",
@@ -45,7 +42,11 @@ export default function Contact() {
       } else {
         window.alert("Message sent");
         // Use useNavigate instead of using useHistory
-        navigate("/");
+        setMsg({
+          name: "",
+          email: "",
+          message: "",
+        });
       }
     } catch (error) {
       console.log(error);
