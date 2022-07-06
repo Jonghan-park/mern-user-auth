@@ -1,7 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  // Handle Input
+  const handleChange = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+
+    setUser({ ...user, [name]: value });
+  };
+
+  // Handle Login
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = user;
+    try {
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (res.status === 400 || !res) {
+        window.alert("Invalid Credentials");
+      } else {
+        window.alert("Login Successful");
+        // window.location.reload();
+        navigate("/");
+
+        // Token is generated when we logged in
+        // Now we need to create Schema for messages
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <div className="container shadow my-5">
@@ -20,7 +67,7 @@ export default function Login() {
           <div className="col-md-6 p-5">
             <h1 className="display-6 fw-bolder mb-5">LOGIN</h1>
 
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label for="exampleInputEmail1" className="form-label">
                   Email address
@@ -30,6 +77,9 @@ export default function Login() {
                   className="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
+                  name="email"
+                  value={user.email}
+                  onChange={handleChange}
                 />
                 <div id="emailHelp" className="form-text">
                   We'll never share your email with anyone else.
@@ -43,6 +93,9 @@ export default function Login() {
                   type="password"
                   className="form-control"
                   id="exampleInputPassword1"
+                  name="password"
+                  value={user.password}
+                  onChange={handleChange}
                 />
               </div>
               <div className="mb-3 form-check">
