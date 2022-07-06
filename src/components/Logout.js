@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Logout() {
-  const navigate = useNavgate();
+  const navigate = useNavigate();
 
   const logout = async () => {
     try {
@@ -26,7 +26,7 @@ function Logout() {
   };
 
   useEffect(() => {
-    Logout();
+    logout();
   }, []);
 
   return <div></div>;

@@ -6,8 +6,10 @@ import Services from "./components/Services";
 import Contact from "./components/Contact";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Logout from "./components/Logout";
 import Footer from "./components/Footer";
 import { Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
       <Footer />
     </>
